@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { WalletProcessorModule } from './../src/wallet-processor.module';
+import { WalletProcessorModule } from '../src/wallet-processor.module';
 
 describe('WalletProcessorController (e2e)', () => {
   let app: INestApplication;
