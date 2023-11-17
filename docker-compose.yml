@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  wallet-api:
+    build:
+      context: .
+      dockerfile: docker/wallet-api/Dockerfile
+    container_name: wallet-api
+    ports:
+      - "3000:3000"
+    networks:
+      - internal_network
+
+  wallet-processor:
+    build:
+      context: .
+      dockerfile: docker/wallet-processor/Dockerfile
+    container_name: wallet-processor
+    ports:
+      - "3001:3001"
+    networks:
+      - internal_network
+
+networks:
+  internal_network:
+    name: internal_network
