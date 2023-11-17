@@ -1,4 +1,8 @@
 export default {
+  rabbitmq: {
+    host: 'rabbitmq',
+    port: 5672,
+  },
   api: {
     port: 3000,
   },

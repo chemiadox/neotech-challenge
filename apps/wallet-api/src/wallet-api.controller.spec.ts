@@ -1,22 +1,34 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { WalletApiController } from './wallet-api.controller';
-import { WalletApiService } from './wallet-api.service';
+import { CustomerController } from './controllers/customer.controller';
+import { CustomerService } from './services/customer.service';
+import { TransactionController } from './controllers/transaction.controller';
+import { TransactionService } from './services/transaction.service';
 
 describe('WalletApiController', () => {
-  let walletApiController: WalletApiController;
+  let customerController: CustomerController;
+  let transactionController: TransactionController;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
-      controllers: [WalletApiController],
-      providers: [WalletApiService],
+      controllers: [CustomerController, TransactionController],
+      providers: [CustomerService, TransactionService],
     }).compile();
 
-    walletApiController = app.get<WalletApiController>(WalletApiController);
+    customerController = app.get<CustomerController>(CustomerController);
+    transactionController = app.get<TransactionController>(
+      TransactionController,
+    );
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(walletApiController.getHello()).toBe('Hello World!');
+    it('customer controller should exist', () => {
+      expect(customerController.getCustomer).toBeDefined();
+      expect(customerController.patchCustomer).toBeDefined();
+      expect(customerController.deleteCustomer).toBeDefined();
+    });
+
+    it('transaction controller should exist', () => {
+      expect(transactionController.postTransaction).toBeDefined();
     });
   });
 });
