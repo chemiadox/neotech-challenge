@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/neotech-challenge/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/neotech-challenge/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/neotech-challenge",
+  "projects": {
+    "wallet-api": {
+      "type": "application",
+      "root": "apps/wallet-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/wallet-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/wallet-api/tsconfig.app.json"
+      }
+    },
+    "wallet-processor": {
+      "type": "application",
+      "root": "apps/wallet-processor",
+      "entryFile": "main",
+      "sourceRoot": "apps/wallet-processor/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/wallet-processor/tsconfig.app.json"
+      }
+    },
+    "shared-config": {
+      "type": "library",
+      "root": "libs/shared-config",
+      "entryFile": "index",
+      "sourceRoot": "libs/shared-config/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/shared-config/tsconfig.lib.json"
+      }
+    }
+  }
+}
