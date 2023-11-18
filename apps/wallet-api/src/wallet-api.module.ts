@@ -23,7 +23,7 @@ declare var process: {
       },
     }),
     BullModule.registerQueue({
-      name: Queues.TRANSACTION_SPLIT,
+      name: Queues.TRANSACTIONS,
     }),
   ],
   controllers: [CustomerController, TransactionController],

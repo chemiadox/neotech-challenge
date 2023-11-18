@@ -7,13 +7,16 @@ import { QueueJobs, Queues } from '../types/queues';
 @Injectable()
 export class TransactionService {
   constructor(
-    @InjectQueue(Queues.TRANSACTION_SPLIT)
+    @InjectQueue(Queues.TRANSACTIONS)
     private readonly transactionsQueue: Queue,
   ) {}
 
   async postTransactions(transactions: Transaction[]) {
+    /**
+     * Ensure all incoming requests executed sequentially
+     */
     const job = await this.transactionsQueue.add(
-      QueueJobs.TRANSACTION_JOB,
+      QueueJobs.SPLIT,
       transactions,
     );
 

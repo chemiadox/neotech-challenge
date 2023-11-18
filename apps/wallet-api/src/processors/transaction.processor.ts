@@ -3,9 +3,9 @@ import { Job } from 'bull';
 import { QueueJobs, Queues } from '../types/queues';
 import { Worker } from 'node:worker_threads';
 
-@Processor(Queues.TRANSACTION_SPLIT)
+@Processor(Queues.TRANSACTIONS)
 export class TransactionProcessor {
-  @Process(QueueJobs.TRANSACTION_JOB)
+  @Process(QueueJobs.SPLIT)
   handleChunking(job: Job) {
     const filename = `${__dirname}/worker/worker.js`;
 
@@ -22,9 +22,9 @@ export class TransactionProcessor {
 
     worker.on('exit', (code) => {
       if (code !== 0) {
-        console.log(`Worker exitted with code ${code}`);
+        console.log(`Worker exited with error code ${code}`);
       } else {
-        console.log('Worker finished its job');
+        console.log('Worker job finished');
       }
     });
   }
