@@ -4,13 +4,11 @@ import { split } from '../../utils/chunker';
 const { transactions, maxLatency } = workerData;
 const generator = split(transactions, maxLatency);
 
-let chunk;
+let chunk = generator.next();
 
-do {
+while (!chunk.done) {
+  parentPort.postMessage(chunk.value);
   chunk = generator.next();
-  if (chunk.value) {
-    parentPort.postMessage(chunk.value);
-  }
-} while (!chunk.done);
+}
 
 process.exit();
