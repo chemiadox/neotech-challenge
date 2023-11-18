@@ -12,6 +12,7 @@ import {
   Customer,
   CustomerSchema,
 } from './database/mongodb/schemas/customer.schema';
+import { HealthController } from "./controllers/health.controller";
 
 /* eslint no-var: "off" */
 declare var process: {
@@ -42,7 +43,7 @@ declare var process: {
       { name: Customer.name, schema: CustomerSchema },
     ]),
   ],
-  controllers: [CustomerController, TransactionController],
+  controllers: [CustomerController, TransactionController, HealthController],
   providers: [CustomerService, TransactionService, TransactionProcessor],
 })
 export class WalletApiModule {}
