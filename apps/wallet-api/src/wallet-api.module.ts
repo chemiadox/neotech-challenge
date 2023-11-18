@@ -12,7 +12,7 @@ import {
   Customer,
   CustomerSchema,
 } from './database/mongodb/schemas/customer.schema';
-import { HealthController } from "./controllers/health.controller";
+import { HealthController } from './controllers/health.controller';
 
 /* eslint no-var: "off" */
 declare var process: {
