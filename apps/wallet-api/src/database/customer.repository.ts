@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
+import { Model, Schema } from 'mongoose';
+import { InjectModel } from "@nestjs/mongoose";
 import { Customer } from './mongodb/schemas/customer.schema';
 import { CustomerPatchDto } from './dto/customer.dto';
 
@@ -15,9 +15,26 @@ export class CustomerRepository {
   }
 
   async updateCustomer(uid: string, customerPatchDto: CustomerPatchDto) {
-    return this.customerModel.findOneAndUpdate({ uid }, customerPatchDto, {
-      new: true,
-    });
+    const customer = await this.customerModel.findOne({ uid });
+
+    if (customerPatchDto.first_name) {
+      customer.first_name = customerPatchDto.first_name;
+    }
+
+    if (customerPatchDto.last_name) {
+      customer.last_name = customerPatchDto.last_name;
+    }
+
+    if (customerPatchDto.balance) {
+      customer.credit_card.balance = new Schema.Types.Decimal128(
+        customerPatchDto.balance.toString(10),
+      );
+      customer.markModified('credit_card');
+    }
+
+    await customer.save();
+
+    return customer;
   }
 
   async deleteCustomer(uid: string) {

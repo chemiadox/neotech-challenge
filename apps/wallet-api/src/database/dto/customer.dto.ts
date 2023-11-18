@@ -19,6 +19,6 @@ export class CustomerDto {
     this.name = `${customer.first_name || '<anonymous>'} ${
       customer.last_name || '<anonymous>'
     }`;
-    this.balance = Number(customer.credit_card.balance);
+    this.balance = parseFloat(customer.credit_card.balance.path);
   }
 }

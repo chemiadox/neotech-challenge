@@ -27,9 +27,10 @@ export class AuthGuard implements CanActivate {
       if (!token || token !== mockedToken) {
         throw new UnauthorizedException();
       }
+
+      request.userAuthorized = true;
     }
 
-    request.authorized = true;
     return true;
   }
 

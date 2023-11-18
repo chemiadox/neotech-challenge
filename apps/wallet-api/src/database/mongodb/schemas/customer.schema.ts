@@ -1,12 +1,12 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Decimal128, HydratedDocument, Types } from 'mongoose';
+import { Decimal128, HydratedDocument } from 'mongoose';
 
 export type CustomerDocument = HydratedDocument<Customer>;
 
 export class CustomerDocumentAddress {
   coordinates: {
-    lat: Types.Decimal128;
-    lon: Types.Decimal128;
+    lat: Decimal128;
+    lon: Decimal128;
   };
   country: string;
   state: string;

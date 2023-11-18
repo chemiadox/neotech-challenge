@@ -9,7 +9,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { CustomerRepository } from '../database/customer.repository';
-import { CustomerDto, CustomerPatchDto } from '../database/dto/customer.dto';
+import { CustomerPatchDto } from '../database/dto/customer.dto';
 import { AuthGuard, KeepExecution } from '../guards/auth.guard';
 import { ResponseCustomerInterceptor } from '../interceptors/response.customer.interceptor';
 
@@ -30,13 +30,11 @@ export class CustomerController {
     @Param('id') id: string,
     @Body() customerPatchDto: CustomerPatchDto,
   ) {
-    return new CustomerDto(
-      await this.customerRepository.updateCustomer(id, customerPatchDto),
-    );
+    return this.customerRepository.updateCustomer(id, customerPatchDto);
   }
 
   @Delete('/customer/:id')
   async deleteCustomer(@Param('id') id: string) {
-    return new CustomerDto(await this.customerRepository.deleteCustomer(id));
+    return this.customerRepository.deleteCustomer(id);
   }
 }
