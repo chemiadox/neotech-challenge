@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Customer } from '../database/mongodb/schemas/customer.schema';
 import { map, Observable } from 'rxjs';
-import { CustomerDto } from "../services/dto/customer.dto";
+import { CustomerDto } from '../services/dto/customer.dto';
 
 export interface Response {
   data: Customer;

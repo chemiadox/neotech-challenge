@@ -1,6 +1,5 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Decimal128, HydratedDocument, Types } from 'mongoose';
-import { Exclude, Expose } from "class-transformer";
 
 export type CustomerDocument = HydratedDocument<Customer>;
 
