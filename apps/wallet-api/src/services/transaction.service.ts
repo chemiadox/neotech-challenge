@@ -1,14 +1,22 @@
 import { Injectable } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
 import { Transaction } from '../types/transactions';
-import { split } from '../utils/chunker';
-
-const maxLatency: number = 1000;
+import { QueueJobs, Queues } from '../types/queues';
 
 @Injectable()
 export class TransactionService {
-  async postTransactions(transactions: Transaction[]): Promise<string> {
-    console.log(split<Transaction>(transactions, maxLatency));
+  constructor(
+    @InjectQueue(Queues.TRANSACTION_SPLIT)
+    private readonly transactionsQueue: Queue,
+  ) {}
 
-    return 'okay';
+  async postTransactions(transactions: Transaction[]) {
+    const job = await this.transactionsQueue.add(
+      QueueJobs.TRANSACTION_JOB,
+      transactions,
+    );
+
+    return { jobId: job.id };
   }
 }

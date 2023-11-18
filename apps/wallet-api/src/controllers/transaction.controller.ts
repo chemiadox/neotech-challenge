@@ -7,7 +7,7 @@ export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
   @Post('/transaction')
-  async postTransaction(@Body() transactions: Transaction[]): Promise<string> {
+  async postTransaction(@Body() transactions: Transaction[]) {
     return this.transactionService.postTransactions(transactions);
   }
 }
