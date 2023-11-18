@@ -18,13 +18,6 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "resolveJsonModule": true,
-    "paths": {
-      "@app/shared-config": [
-        "libs/shared-config/src"
-      ],
-      "@app/shared-config/*": [
-        "libs/shared-config/src/*"
-      ]
-    }
+    "paths": {}
   }
 }
