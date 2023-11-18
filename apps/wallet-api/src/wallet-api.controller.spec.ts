@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CustomerController } from './controllers/customer.controller';
-import { CustomerService } from './services/customer.service';
+import { CustomerRepository } from './database/customer.repository';
 import { TransactionController } from './controllers/transaction.controller';
 import { TransactionService } from './services/transaction.service';
 
@@ -11,7 +11,7 @@ describe('WalletApiController', () => {
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [CustomerController, TransactionController],
-      providers: [CustomerService, TransactionService],
+      providers: [CustomerRepository, TransactionService],
     }).compile();
 
     customerController = app.get<CustomerController>(CustomerController);

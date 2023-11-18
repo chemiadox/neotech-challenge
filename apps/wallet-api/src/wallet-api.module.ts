@@ -3,7 +3,7 @@ import { BullModule } from '@nestjs/bull';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { CustomerController } from './controllers/customer.controller';
-import { CustomerService } from './services/customer.service';
+import { CustomerRepository } from './database/customer.repository';
 import { TransactionController } from './controllers/transaction.controller';
 import { TransactionService } from './services/transaction.service';
 import { Queues } from './types/queues';
@@ -33,6 +33,9 @@ declare var process: {
     BullModule.registerQueue({
       name: Queues.TRANSACTIONS,
     }),
+    BullModule.registerQueue({
+      name: Queues.CHUNKS,
+    }),
     // TODO make config/env
     MongooseModule.forRoot(
       process.env.NODE_ENV === 'production'
@@ -44,6 +47,6 @@ declare var process: {
     ]),
   ],
   controllers: [CustomerController, TransactionController, HealthController],
-  providers: [CustomerService, TransactionService, TransactionProcessor],
+  providers: [CustomerRepository, TransactionService, TransactionProcessor],
 })
 export class WalletApiModule {}

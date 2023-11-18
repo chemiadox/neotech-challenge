@@ -8,8 +8,8 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { CustomerService } from '../services/customer.service';
-import { CustomerDto, CustomerPatchDto } from '../services/dto/customer.dto';
+import { CustomerRepository } from '../database/customer.repository';
+import { CustomerDto, CustomerPatchDto } from '../database/dto/customer.dto';
 import { AuthGuard, KeepExecution } from '../guards/auth.guard';
 import { ResponseCustomerInterceptor } from '../interceptors/response.customer.interceptor';
 
@@ -17,12 +17,12 @@ import { ResponseCustomerInterceptor } from '../interceptors/response.customer.i
 @UseGuards(AuthGuard)
 @UseInterceptors(ResponseCustomerInterceptor)
 export class CustomerController {
-  constructor(private readonly customerService: CustomerService) {}
+  constructor(private readonly customerRepository: CustomerRepository) {}
 
   @Get('/customer/:id')
   @KeepExecution(true)
   async getCustomer(@Param('id') id: string) {
-    return this.customerService.getCustomer(id);
+    return this.customerRepository.getCustomer(id);
   }
 
   @Patch('/customer/:id')
@@ -31,12 +31,12 @@ export class CustomerController {
     @Body() customerPatchDto: CustomerPatchDto,
   ) {
     return new CustomerDto(
-      await this.customerService.patchCustomer(id, customerPatchDto),
+      await this.customerRepository.updateCustomer(id, customerPatchDto),
     );
   }
 
   @Delete('/customer/:id')
   async deleteCustomer(@Param('id') id: string) {
-    return new CustomerDto(await this.customerService.deleteCustomer(id));
+    return new CustomerDto(await this.customerRepository.deleteCustomer(id));
   }
 }

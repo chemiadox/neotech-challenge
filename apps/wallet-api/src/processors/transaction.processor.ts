@@ -1,10 +1,15 @@
-import { Process, Processor } from '@nestjs/bull';
-import { Job } from 'bull';
+import { InjectQueue, Process, Processor } from '@nestjs/bull';
+import { Job, Queue } from 'bull';
 import { QueueJobs, Queues } from '../types/queues';
 import { Worker } from 'node:worker_threads';
 
 @Processor(Queues.TRANSACTIONS)
 export class TransactionProcessor {
+  constructor(
+    @InjectQueue(Queues.CHUNKS)
+    private readonly chunksQueue: Queue,
+  ) {}
+
   @Process(QueueJobs.SPLIT)
   handleChunking(job: Job) {
     const filename = `${__dirname}/worker/worker.js`;
@@ -16,8 +21,10 @@ export class TransactionProcessor {
       },
     });
 
-    worker.on('message', (data) => {
-      console.log('Worker result data', data);
+    worker.on('message', async (data) => {
+      this.chunksQueue.add(QueueJobs.PROCESS, data).then((job) => {
+        console.log('Processor jobId', job.id, job.data);
+      });
     });
 
     worker.on('exit', (code) => {
