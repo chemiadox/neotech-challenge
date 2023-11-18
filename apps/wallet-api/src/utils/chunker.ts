@@ -6,7 +6,6 @@ type Reducible = {
 type List<T extends Reducible> = {
   record: T;
   next: List<T> | null;
-  rest: T[];
 };
 
 const calculate = <T extends Reducible>(list: List<T> | null): number => {
@@ -29,35 +28,31 @@ const unwrap = <T extends Reducible>(list: List<T> | null): T[] => {
 const findMax = <T extends Reducible>(
   capacity: number,
   records: T[],
+  deep: number = 0,
 ): List<T> | null => {
-  const lists: List<T>[] = [];
-  let maxList = null;
   let maxValue = 0;
+  let maxRecord: T | null = null;
+  let maxList: List<T> = null;
 
-  records
-    .filter((record) => record.latency <= capacity)
-    .forEach((record) => {
-      const capacityLeft = capacity - record.latency;
-      const restRecords = records.filter((r) => r !== record);
-      const nextList = findMax(capacityLeft, restRecords);
+  for (let i = 0; i < records.length; i++) {
+    if (records[i].latency <= capacity) {
+      const stored = records[i].latency;
+      const capacityLeft = capacity - records[i].latency;
 
-      lists.push({
-        record,
-        next: nextList,
-        rest: nextList?.rest || restRecords,
-      });
-    });
+      records[i].latency = capacity;
+      const newList = findMax(capacityLeft, records, deep + 1);
+      const newValue = calculate(newList) + stored;
+      records[i].latency = stored;
 
-  lists.forEach((list) => {
-    const total = calculate(list);
-
-    if (total > maxValue) {
-      maxValue = total;
-      maxList = list;
+      if (newValue > maxValue) {
+        maxValue = newValue;
+        maxRecord = records[i];
+        maxList = newList;
+      }
     }
-  });
+  }
 
-  return maxList;
+  return maxRecord ? { record: maxRecord, next: maxList } : null;
 };
 
 export const split = <T extends Reducible>(
@@ -66,13 +61,16 @@ export const split = <T extends Reducible>(
 ): T[][] => {
   const chunks: T[][] = [];
   let reducible = [...records];
+  let chunk = null;
 
-  while (reducible.length) {
-    const list = findMax<T>(maxLatency, reducible);
-    reducible = list.rest;
-    const unwrapped = unwrap(list);
-    chunks.push(unwrapped);
-  }
+  do {
+    chunk = findMax(maxLatency, reducible);
+    if (chunk) {
+      const unwrapped = unwrap<T>(chunk);
+      chunks.push(unwrapped);
+      reducible = reducible.filter((record) => !unwrapped.includes(record));
+    }
+  } while (chunk);
 
   return chunks;
 };
