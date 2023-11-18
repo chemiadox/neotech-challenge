@@ -1,5 +1,17 @@
 version: "3.8"
 services:
+  mongodb:
+    image: mongo:6-jammy
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: wallet
+    ports:
+      - '27017:27017'
+    volumes:
+      - dbdata6:/data/db
+
   redis:
     image: redis:6.2-alpine
     container_name: redis
@@ -23,6 +35,7 @@ services:
       - internal_network
     depends_on:
       - redis
+      - mongodb
 
   wallet-processor:
     build:
@@ -35,9 +48,11 @@ services:
       - internal_network
     depends_on:
       - redis
+      - mongodb
 
 volumes:
   redisdata:
+  dbdata6:
 
 networks:
   internal_network:
