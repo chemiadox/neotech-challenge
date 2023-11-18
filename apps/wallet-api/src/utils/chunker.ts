@@ -55,11 +55,10 @@ const findMax = <T extends Reducible>(
   return maxRecord ? { record: maxRecord, next: maxList } : null;
 };
 
-export const split = <T extends Reducible>(
+export function* split<T extends Reducible>(
   records: T[],
   maxLatency: number,
-): T[][] => {
-  const chunks: T[][] = [];
+): Generator<T[]> {
   let reducible = [...records];
   let chunk = null;
 
@@ -67,10 +66,8 @@ export const split = <T extends Reducible>(
     chunk = findMax(maxLatency, reducible);
     if (chunk) {
       const unwrapped = unwrap<T>(chunk);
-      chunks.push(unwrapped);
+      yield unwrapped;
       reducible = reducible.filter((record) => !unwrapped.includes(record));
     }
   } while (chunk);
-
-  return chunks;
-};
+}

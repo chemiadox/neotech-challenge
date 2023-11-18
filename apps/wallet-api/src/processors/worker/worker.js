@@ -1,7 +1,16 @@
-const { workerData, parentPort } = require('worker_threads');
-const { split } = require('../../utils/chunker');
+import { parentPort, workerData } from 'worker_threads';
+import { split } from '../../utils/chunker';
 
 const { transactions, maxLatency } = workerData;
-parentPort.postMessage(split(transactions, maxLatency));
+const generator = split(transactions, maxLatency);
+
+let chunk;
+
+do {
+  chunk = generator.next();
+  if (chunk.value) {
+    parentPort.postMessage(chunk.value);
+  }
+} while (!chunk.done);
 
 process.exit();
