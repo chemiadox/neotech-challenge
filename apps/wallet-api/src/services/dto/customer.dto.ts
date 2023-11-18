@@ -8,8 +8,7 @@ export class CustomerPatchDto {
 }
 
 export class CustomerDto {
-  first_name: string;
-  last_name: string;
+  name: string;
   balance: number;
 
   constructor(customer: Customer = null) {
@@ -17,8 +16,9 @@ export class CustomerDto {
       throw new NotFoundException('Customer not found');
     }
 
-    this.first_name = customer.first_name;
-    this.last_name = customer.last_name;
+    this.name = `${customer.first_name || '<anonymous>'} ${
+      customer.last_name || '<anonymous>'
+    }`;
     this.balance = Number(customer.credit_card.balance);
   }
 }

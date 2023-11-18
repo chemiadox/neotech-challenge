@@ -1,5 +1,6 @@
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Decimal128, HydratedDocument, Types } from 'mongoose';
+import { Exclude, Expose } from "class-transformer";
 
 export type CustomerDocument = HydratedDocument<Customer>;
 
@@ -25,7 +26,7 @@ export class CustomerDocumentEmployment {
   key_skill: string;
 }
 
-@Schema({ timestamps: true, virtuals: true, collection: 'users' })
+@Schema({ timestamps: true, collection: 'users' })
 export class Customer {
   @Prop()
   uid: string;

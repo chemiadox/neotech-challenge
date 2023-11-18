@@ -1,12 +1,26 @@
-import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { CustomerService } from '../services/customer.service';
-import { CustomerPatchDto } from '../services/dto/customer.dto';
+import { CustomerDto, CustomerPatchDto } from '../services/dto/customer.dto';
+import { AuthGuard, KeepExecution } from '../auth/auth.guard';
+import { ResponseCustomerInterceptor } from '../interceptors/response.customer.interceptor';
 
 @Controller()
+@UseGuards(AuthGuard)
+@UseInterceptors(ResponseCustomerInterceptor)
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
   @Get('/customer/:id')
+  @KeepExecution(true)
   async getCustomer(@Param('id') id: string) {
     return this.customerService.getCustomer(id);
   }
@@ -16,11 +30,13 @@ export class CustomerController {
     @Param('id') id: string,
     @Body() customerPatchDto: CustomerPatchDto,
   ) {
-    return this.customerService.patchCustomer(id, customerPatchDto);
+    return new CustomerDto(
+      await this.customerService.patchCustomer(id, customerPatchDto),
+    );
   }
 
   @Delete('/customer/:id')
   async deleteCustomer(@Param('id') id: string) {
-    return this.customerService.deleteCustomer(id);
+    return new CustomerDto(await this.customerService.deleteCustomer(id));
   }
 }
