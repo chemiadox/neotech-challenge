@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { CustomerService } from '../services/customer.service';
 import { CustomerDto, CustomerPatchDto } from '../services/dto/customer.dto';
-import { AuthGuard, KeepExecution } from '../auth/auth.guard';
+import { AuthGuard, KeepExecution } from '../guards/auth.guard';
 import { ResponseCustomerInterceptor } from '../interceptors/response.customer.interceptor';
 
 @Controller()
