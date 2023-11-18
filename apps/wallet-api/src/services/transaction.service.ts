@@ -15,10 +15,7 @@ export class TransactionService {
     /**
      * Ensure all incoming requests executed sequentially
      */
-    const job = await this.transactionsQueue.add(
-      QueueJobs.SPLIT,
-      transactions,
-    );
+    const job = await this.transactionsQueue.add(QueueJobs.SPLIT, transactions);
 
     return { jobId: job.id };
   }
