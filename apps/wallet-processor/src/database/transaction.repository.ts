@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Transaction } from './mongodb/schemas/transaction.schema';
-import { Model } from 'mongoose';
+import { Model, Schema } from 'mongoose';
+
+import {
+  Transaction,
+  TransactionDocument,
+} from './mongodb/schemas/transaction.schema';
+import { TransactionDto } from './mongodb/dto/transaction.dto';
 
 @Injectable()
 export class TransactionRepository {
@@ -9,17 +14,16 @@ export class TransactionRepository {
     @InjectModel(Transaction.name) private transactionModel: Model<Transaction>,
   ) {}
 
-  async createTransaction(transactionDto) {
+  async createTransaction(transactionDto: TransactionDto) {
     return this.transactionModel.create({
-      value: transactionDto.value,
+      value: new Schema.Types.Decimal128(transactionDto.value.toString(10)),
       latency: transactionDto.latency,
       customer_id: transactionDto.customerId,
       failed: transactionDto.failed,
     });
   }
 
-  // TODO remove
-  async getTransactions() {
-    return this.transactionModel.find();
+  async getFailedTransactions(): Promise<TransactionDocument[]> {
+    return this.transactionModel.find({ failed: true });
   }
 }

@@ -15,6 +15,8 @@ import {
 import { TransactionRepository } from './database/transaction.repository';
 import { CustomerRepository } from './database/customer.repository';
 import { CustomerService } from './services/customer.service';
+import { TransactionService } from './processors/transaction.service';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -37,11 +39,13 @@ import { CustomerService } from './services/customer.service';
       { name: Transaction.name, schema: TransactionSchema },
       { name: Customer.name, schema: CustomerSchema },
     ]),
+    ScheduleModule.forRoot(),
   ],
   controllers: [HealthController],
   providers: [
     ChunkProcessor,
     TransactionRepository,
+    TransactionService,
     CustomerRepository,
     CustomerService,
   ],

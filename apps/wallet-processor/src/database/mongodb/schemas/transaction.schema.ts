@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Types } from 'mongoose';
+import { HydratedDocument, Types, Schema as MongooseSchema } from 'mongoose';
 
 export type TransactionDocument = HydratedDocument<Transaction>;
 
@@ -14,8 +14,8 @@ export class Transaction {
   @Prop()
   customer_id: string;
 
-  @Prop({ type: Boolean, default: false })
-  failed: { type: boolean; default: false };
+  @Prop({ type: MongooseSchema.Types.Boolean, default: false })
+  failed: boolean;
 }
 
 export const TransactionSchema = SchemaFactory.createForClass(Transaction);
