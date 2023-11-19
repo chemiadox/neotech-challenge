@@ -14,13 +14,6 @@ import {
 } from './database/mongodb/schemas/customer.schema';
 import { HealthController } from './controllers/health.controller';
 
-/* eslint no-var: "off" */
-declare var process: {
-  env: {
-    NODE_ENV: string;
-  };
-};
-
 @Module({
   imports: [
     // TODO make config/env
