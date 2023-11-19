@@ -14,7 +14,7 @@ import {
 } from './database/mongodb/schemas/customer.schema';
 import { TransactionRepository } from './database/transaction.repository';
 import { CustomerRepository } from './database/customer.repository';
-import { CustomerService } from "./services/customer.service";
+import { CustomerService } from './services/customer.service';
 
 @Module({
   imports: [
