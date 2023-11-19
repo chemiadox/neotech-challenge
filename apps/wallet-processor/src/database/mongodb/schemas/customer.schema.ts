@@ -25,9 +25,9 @@ export class CustomerDocumentEmployment {
   key_skill: string;
 }
 
-@Schema({ timestamps: true, collection: 'users' })
+@Schema({ timestamps: true, collection: 'users', autoIndex: true })
 export class Customer {
-  @Prop()
+  @Prop({ index: true })
   uid: string;
 
   @Prop()

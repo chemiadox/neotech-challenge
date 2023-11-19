@@ -11,10 +11,10 @@ export class Transaction {
   @Prop()
   latency: number;
 
-  @Prop()
+  @Prop({ index: true })
   customer_id: string;
 
-  @Prop({ type: MongooseSchema.Types.Boolean, default: false })
+  @Prop({ type: MongooseSchema.Types.Boolean, default: false, index: true })
   failed: boolean;
 }
 

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { BullModule } from '@nestjs/bull';
 import { MongooseModule } from '@nestjs/mongoose';
 
@@ -13,6 +13,12 @@ import {
   CustomerSchema,
 } from './database/mongodb/schemas/customer.schema';
 import { HealthController } from './controllers/health.controller';
+import { SeedingService } from './services/seeding.service';
+import {
+  Dictionary,
+  DictionarySchema,
+} from './database/mongodb/schemas/dictionary.schema';
+import { DictionaryRepository } from './database/dictionary.repository';
 
 @Module({
   imports: [
@@ -37,9 +43,22 @@ import { HealthController } from './controllers/health.controller';
     ),
     MongooseModule.forFeature([
       { name: Customer.name, schema: CustomerSchema },
+      { name: Dictionary.name, schema: DictionarySchema },
     ]),
   ],
   controllers: [CustomerController, TransactionController, HealthController],
-  providers: [CustomerRepository, TransactionService, TransactionProcessor],
+  providers: [
+    CustomerRepository,
+    DictionaryRepository,
+    TransactionService,
+    TransactionProcessor,
+    SeedingService,
+  ],
 })
-export class WalletApiModule {}
+export class WalletApiModule implements OnModuleInit {
+  constructor(private readonly seedingService: SeedingService) {}
+
+  async onModuleInit() {
+    return this.seedingService.seedCustomers();
+  }
+}

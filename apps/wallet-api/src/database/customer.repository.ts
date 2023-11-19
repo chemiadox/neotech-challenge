@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Model, Schema } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { Customer } from './mongodb/schemas/customer.schema';
+import { Customer, CustomerDocument } from './mongodb/schemas/customer.schema';
 import { CustomerPatchDto } from './dto/customer.dto';
 
 @Injectable()
@@ -10,8 +10,16 @@ export class CustomerRepository {
     @InjectModel(Customer.name) private customerModel: Model<Customer>,
   ) {}
 
+  async getCustomerCount() {
+    return this.customerModel.countDocuments();
+  }
+
   async getCustomer(uid: string) {
     return this.customerModel.findOne({ uid });
+  }
+
+  async createCustomer(document: CustomerDocument) {
+    return this.customerModel.create(document);
   }
 
   async updateCustomer(uid: string, customerPatchDto: CustomerPatchDto) {

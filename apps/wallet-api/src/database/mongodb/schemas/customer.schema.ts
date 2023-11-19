@@ -6,7 +6,7 @@ export type CustomerDocument = HydratedDocument<Customer>;
 export class CustomerDocumentAddress {
   coordinates: {
     lat: Decimal128;
-    lon: Decimal128;
+    lng: Decimal128;
   };
   country: string;
   state: string;
@@ -25,9 +25,9 @@ export class CustomerDocumentEmployment {
   key_skill: string;
 }
 
-@Schema({ timestamps: true, collection: 'users' })
+@Schema({ timestamps: true, collection: 'users', autoIndex: true })
 export class Customer {
-  @Prop()
+  @Prop({ index: true })
   uid: string;
 
   @Prop()
@@ -51,8 +51,8 @@ export class Customer {
   @Prop()
   avatar: string;
 
-  @Prop()
-  date_of_birth: Date;
+  @Prop({ nullable: true })
+  date_of_birth: Date | null;
 
   @Prop()
   email: string;
