@@ -1,8 +1,8 @@
+import { Queue } from 'bull';
 import * as Stream from 'stream';
 import * as readline from 'readline';
 import { Injectable } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bull';
-import { Queue } from 'bull';
 import {
   GetObjectCommand,
   HeadObjectCommand,
@@ -100,9 +100,11 @@ export class SeedingService {
       const record = await this.customerRepository.getCustomer(document.uid);
 
       if (!record) {
-        await this.customerRepository.createCustomer(
+        const record = await this.customerRepository.createCustomer(
           document as unknown as CustomerDocument,
         );
+
+        console.log('Created record', record.uid, record._id);
       }
     } catch (error) {
       console.log(`Error processing next line (${error.message})`);

@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+
 import { Customer } from './mongodb/schemas/customer.schema';
 
 @Injectable()

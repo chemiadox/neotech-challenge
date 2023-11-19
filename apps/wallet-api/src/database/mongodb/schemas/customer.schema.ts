@@ -1,5 +1,5 @@
-import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Decimal128, HydratedDocument } from 'mongoose';
+import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 export type CustomerDocument = HydratedDocument<Customer>;
 

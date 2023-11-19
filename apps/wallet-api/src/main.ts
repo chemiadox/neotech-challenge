@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+
 import { WalletApiModule } from './wallet-api.module';
 
 async function bootstrap() {

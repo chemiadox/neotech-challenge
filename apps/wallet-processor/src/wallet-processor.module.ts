@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
-import { HealthController } from './controllers/health.controller';
-import { ChunkProcessor } from './processors/chunk.processor';
 import { BullModule } from '@nestjs/bull';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ScheduleModule } from '@nestjs/schedule';
+
+import { HealthController } from './controllers/health.controller';
+import { ChunkProcessor } from './processors/chunk.processor';
 import { Queues } from './types/queues';
 import {
   Transaction,
@@ -16,7 +18,6 @@ import { TransactionRepository } from './database/transaction.repository';
 import { CustomerRepository } from './database/customer.repository';
 import { CustomerService } from './services/customer.service';
 import { TransactionService } from './processors/transaction.service';
-import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [

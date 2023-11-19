@@ -1,11 +1,12 @@
+import { map, Observable } from 'rxjs';
 import {
   CallHandler,
   ExecutionContext,
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
+
 import { Customer } from '../database/mongodb/schemas/customer.schema';
-import { map, Observable } from 'rxjs';
 import { CustomerDto } from '../database/dto/customer.dto';
 
 @Injectable()

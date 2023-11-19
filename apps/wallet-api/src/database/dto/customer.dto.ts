@@ -1,5 +1,6 @@
-import { Customer } from '../mongodb/schemas/customer.schema';
 import { NotFoundException } from '@nestjs/common';
+
+import { Customer } from '../mongodb/schemas/customer.schema';
 
 export class CustomerPatchDto {
   first_name?: string;

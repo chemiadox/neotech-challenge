@@ -1,7 +1,8 @@
+import { Connection } from 'mongoose';
 import { Controller, Get } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
-import { Connection } from 'mongoose';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+
 import { StatusDto } from '../database/dto/health.dto';
 
 @ApiTags('health')

@@ -1,6 +1,7 @@
+import { Schema } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
-import { Schema } from 'mongoose';
+
 import { TransactionRepository } from '../database/transaction.repository';
 import { TransactionDto } from '../database/mongodb/dto/transaction.dto';
 import { CustomerService } from '../services/customer.service';

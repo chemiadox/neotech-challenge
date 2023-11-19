@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import { Model, Schema } from 'mongoose';
 import { BigNumber } from 'bignumber.js';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+
 import { Customer } from '../database/mongodb/schemas/customer.schema';
 import { CustomerRepository } from '../database/customer.repository';
 

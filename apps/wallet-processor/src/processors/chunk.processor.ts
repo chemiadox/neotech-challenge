@@ -1,5 +1,6 @@
-import { Process, Processor } from '@nestjs/bull';
 import { Job } from 'bull';
+import { Process, Processor } from '@nestjs/bull';
+
 import { QueueJobs, Queues } from '../types/queues';
 import { TransactionService } from './transaction.service';
 

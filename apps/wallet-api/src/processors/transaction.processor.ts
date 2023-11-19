@@ -1,7 +1,8 @@
-import { InjectQueue, Process, Processor } from '@nestjs/bull';
-import { Job, Queue } from 'bull';
-import { QueueJobs, Queues } from '../types/queues';
 import { Worker } from 'node:worker_threads';
+import { Job, Queue } from 'bull';
+import { InjectQueue, Process, Processor } from '@nestjs/bull';
+
+import { QueueJobs, Queues } from '../types/queues';
 
 @Processor(Queues.TRANSACTIONS)
 export class TransactionProcessor {
