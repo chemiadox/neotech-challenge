@@ -2,6 +2,7 @@ version: "3.8"
 services:
   mongodb:
     image: mongo:6-jammy
+    container_name: mongodb
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -11,6 +12,8 @@ services:
       - '27017:27017'
     volumes:
       - dbdata6:/data/db
+    networks:
+      - internal_network
 
   redis:
     image: redis:6.2-alpine

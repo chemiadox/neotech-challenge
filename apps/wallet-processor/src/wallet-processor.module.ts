@@ -32,8 +32,8 @@ import { ScheduleModule } from '@nestjs/schedule';
     // TODO make config/env
     MongooseModule.forRoot(
       process.env.NODE_ENV === 'production'
-        ? `mongodb://root:example@mongodb/wallet?authSource=admin`
-        : `mongodb://root:example@localhost:27017/wallet?authSource=admin`,
+        ? 'mongodb://root:example@mongodb/wallet?authSource=admin'
+        : 'mongodb://root:example@localhost:27017/wallet?authSource=admin',
     ),
     MongooseModule.forFeature([
       { name: Transaction.name, schema: TransactionSchema },

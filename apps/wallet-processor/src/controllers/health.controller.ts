@@ -11,6 +11,7 @@ export class HealthController {
     const memory = process.memoryUsage();
 
     return {
+      service: 'wallet-processor',
       status: 'up',
       memory_total: memory.heapTotal,
       memory_used: memory.heapUsed,
