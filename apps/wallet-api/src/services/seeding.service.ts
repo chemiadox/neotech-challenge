@@ -9,6 +9,9 @@ import { Queues } from '../types/queues';
 import { transformCustomerSeedToDocument } from '../utils/transformers';
 import { CustomerRepository } from '../database/customer.repository';
 import { DictionaryRepository } from '../database/dictionary.repository';
+import { config } from '../config';
+
+const SeededName = 'seeded';
 
 @Injectable()
 export class SeedingService {
@@ -20,7 +23,7 @@ export class SeedingService {
   ) {}
 
   async seedCustomers() {
-    const isSeeded = await this.dictionaryRepository.read('seeded');
+    const isSeeded = await this.dictionaryRepository.read(SeededName);
 
     if (isSeeded && isSeeded.value === 'true') {
       console.log('Seeding is already done, skipping.');
@@ -50,7 +53,7 @@ export class SeedingService {
       });
 
       lineStream.on('close', () => {
-        this.dictionaryRepository.write('seeded', 'true');
+        this.dictionaryRepository.write(SeededName, 'true');
         this.transactionsQueue.resume();
 
         console.log(`Seeding finished.`);
@@ -63,13 +66,13 @@ export class SeedingService {
   private async getReadableStream() {
     const s3client = new S3Client({
       signer: { sign: async (request) => request },
-      region: 'eu-central-1',
+      region: config.aws.region,
     });
 
     const dataObject = await s3client.send(
       new GetObjectCommand({
-        Bucket: 'nt-interview-files',
-        Key: 'data.json',
+        Bucket: config.aws.seedBucket,
+        Key: config.aws.seedKey,
       }),
     );
 

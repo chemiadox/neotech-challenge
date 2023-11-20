@@ -18,24 +18,15 @@ import { TransactionRepository } from './database/transaction.repository';
 import { CustomerRepository } from './database/customer.repository';
 import { CustomerService } from './services/customer.service';
 import { TransactionService } from './processors/transaction.service';
+import { config } from './config';
 
 @Module({
   imports: [
-    BullModule.forRoot({
-      redis: {
-        host: process.env.NODE_ENV === 'production' ? 'redis' : 'localhost',
-        port: 6379,
-      },
-    }),
+    BullModule.forRoot({ redis: config.redis }),
     BullModule.registerQueue({
       name: Queues.CHUNKS,
     }),
-    // TODO make config/env
-    MongooseModule.forRoot(
-      process.env.NODE_ENV === 'production'
-        ? 'mongodb://root:example@mongodb/wallet?authSource=admin'
-        : 'mongodb://root:example@localhost:27017/wallet?authSource=admin',
-    ),
+    MongooseModule.forRoot(config.mongo.uri),
     MongooseModule.forFeature([
       { name: Transaction.name, schema: TransactionSchema },
       { name: Customer.name, schema: CustomerSchema },

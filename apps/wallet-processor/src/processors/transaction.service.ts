@@ -6,6 +6,7 @@ import { TransactionRepository } from '../database/transaction.repository';
 import { TransactionDto } from '../database/mongodb/dto/transaction.dto';
 import { CustomerService } from '../services/customer.service';
 import { TransactionDocument } from '../database/mongodb/schemas/transaction.schema';
+import { config } from '../config';
 
 @Injectable()
 export class TransactionService {
@@ -30,7 +31,7 @@ export class TransactionService {
     }
   }
 
-  @Cron('0 0 * * * *')
+  @Cron(config.cronConfig)
   async handleCron() {
     const transactions: TransactionDocument[] =
       await this.transactionRepository.getFailedTransactions();

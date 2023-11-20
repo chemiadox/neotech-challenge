@@ -2,6 +2,8 @@ import { Connection } from 'mongoose';
 import { Controller, Get } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 
+import { config } from '../config';
+
 @Controller()
 export class HealthController {
   constructor(@InjectConnection() private readonly connection: Connection) {}
@@ -11,7 +13,7 @@ export class HealthController {
     const memory = process.memoryUsage();
 
     return {
-      service: 'wallet-processor',
+      service: config.serviceName,
       status: 'up',
       memory_total: memory.heapTotal,
       memory_used: memory.heapUsed,

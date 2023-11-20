@@ -1,6 +1,8 @@
 import { Decimal128, HydratedDocument, Types } from 'mongoose';
 import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 
+import { config } from '../../../config';
+
 export type CustomerDocument = HydratedDocument<Customer>;
 
 export class CustomerDocumentAddress {
@@ -25,7 +27,11 @@ export class CustomerDocumentEmployment {
   key_skill: string;
 }
 
-@Schema({ timestamps: true, collection: 'users', autoIndex: true })
+@Schema({
+  timestamps: true,
+  collection: config.mongo.collections.users,
+  autoIndex: true,
+})
 export class Customer {
   @Prop({ index: true })
   uid: string;

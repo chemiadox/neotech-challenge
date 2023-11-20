@@ -4,6 +4,7 @@ import { InjectConnection } from '@nestjs/mongoose';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { StatusDto } from '../database/dto/health.dto';
+import { config } from "../config";
 
 @Controller()
 @ApiTags('Status')
@@ -20,7 +21,7 @@ export class HealthController {
     const memory = process.memoryUsage();
 
     return {
-      service: 'wallet-api',
+      service: config.serviceName,
       status: 'up',
       memory_total: memory.heapTotal,
       memory_used: memory.heapUsed,

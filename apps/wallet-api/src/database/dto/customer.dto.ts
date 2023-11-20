@@ -1,7 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
+import { ApiProperty } from '@nestjs/swagger';
 
 import { Customer } from '../mongodb/schemas/customer.schema';
-import { ApiProperty } from '@nestjs/swagger';
 
 export class CustomerPatchDto {
   @ApiProperty({ required: false })

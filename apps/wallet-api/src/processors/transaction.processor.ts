@@ -3,6 +3,7 @@ import { Job, Queue } from 'bull';
 import { InjectQueue, Process, Processor } from '@nestjs/bull';
 
 import { QueueJobs, Queues } from '../types/queues';
+import { config } from '../config';
 
 @Processor(Queues.TRANSACTIONS)
 export class TransactionProcessor {
@@ -18,7 +19,7 @@ export class TransactionProcessor {
     const worker = new Worker(filename, {
       workerData: {
         transactions: job.data,
-        maxLatency: 1000,
+        maxLatency: config.transactions.maxLatency,
       },
     });
 

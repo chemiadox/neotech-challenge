@@ -7,12 +7,14 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 
-const mockedToken = '123';
+import { config } from '../config';
+
 export const KeepExecution = Reflector.createDecorator<boolean>();
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
+
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
@@ -22,9 +24,9 @@ export class AuthGuard implements CanActivate {
     );
 
     if (keepExecution) {
-      request.userAuthorized = token === mockedToken;
+      request.userAuthorized = token === config.mockedToken;
     } else {
-      if (!token || token !== mockedToken) {
+      if (!token || token !== config.mockedToken) {
         throw new UnauthorizedException();
       }
 

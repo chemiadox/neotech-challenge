@@ -19,28 +19,14 @@ import {
   DictionarySchema,
 } from './database/mongodb/schemas/dictionary.schema';
 import { DictionaryRepository } from './database/dictionary.repository';
+import { config } from './config';
 
 @Module({
   imports: [
-    // TODO make config/env
-    BullModule.forRoot({
-      redis: {
-        host: process.env.NODE_ENV === 'production' ? 'redis' : 'localhost',
-        port: 6379,
-      },
-    }),
-    BullModule.registerQueue({
-      name: Queues.TRANSACTIONS,
-    }),
-    BullModule.registerQueue({
-      name: Queues.CHUNKS,
-    }),
-    // TODO make config/env
-    MongooseModule.forRoot(
-      process.env.NODE_ENV === 'production'
-        ? `mongodb://root:example@mongodb/wallet?authSource=admin`
-        : `mongodb://root:example@localhost:27017/wallet?authSource=admin`,
-    ),
+    BullModule.forRoot({ redis: config.redis }),
+    BullModule.registerQueue({ name: Queues.TRANSACTIONS }),
+    BullModule.registerQueue({ name: Queues.CHUNKS }),
+    MongooseModule.forRoot(config.mongo.uri),
     MongooseModule.forFeature([
       { name: Customer.name, schema: CustomerSchema },
       { name: Dictionary.name, schema: DictionarySchema },

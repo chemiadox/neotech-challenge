@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-@Schema({ timestamps: false, collection: 'dictionary' })
+import { config } from '../../../config';
+
+@Schema({ timestamps: false, collection: config.mongo.collections.dictionary })
 export class Dictionary {
   @Prop({ index: true })
   name: string;

@@ -1,9 +1,11 @@
 import { HydratedDocument, Types, Schema as MongooseSchema } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
+import { config } from '../../../config';
+
 export type TransactionDocument = HydratedDocument<Transaction>;
 
-@Schema({ timestamps: true, collection: 'transactions' })
+@Schema({ timestamps: true, collection: config.mongo.collections.transactions })
 export class Transaction {
   @Prop()
   value: Types.Decimal128;
