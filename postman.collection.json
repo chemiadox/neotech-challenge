@@ -1,0 +1,247 @@
+{
+	"info": {
+		"_postman_id": "9dd7cb27-a137-4d58-8e47-ccc0e92a94c3",
+		"name": "Wallet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16357691"
+	},
+	"item": [
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Get customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{testToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{walletApiHost}}:{{walletApiPort}}/customer/{{testUserUid}}",
+							"protocol": "http",
+							"host": [
+								"{{walletApiHost}}"
+							],
+							"port": "{{walletApiPort}}",
+							"path": [
+								"customer",
+								"{{testUserUid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update customer",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{testToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"Jane\",\n    \"last_name\": \"Doe\",\n    \"balance\": 668.32\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{walletApiHost}}:{{walletApiPort}}/customer/{{testUserUid}}",
+							"protocol": "http",
+							"host": [
+								"{{walletApiHost}}"
+							],
+							"port": "{{walletApiPort}}",
+							"path": [
+								"customer",
+								"{{testUserUid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Soft delete customer",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{testToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{walletApiHost}}:{{walletApiPort}}/customer/{{testUserUid}}",
+							"protocol": "http",
+							"host": [
+								"{{walletApiHost}}"
+							],
+							"port": "{{walletApiPort}}",
+							"path": [
+								"customer",
+								"{{testUserUid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Send transactions",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{testToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  { \"value\": 110, \"latency\": 600, \"customerId\": \"c218a002-07cb-4dac-9b46-4628e0bba25d\" },\n  { \"value\": 70, \"latency\": 250, \"customerId\": \"c218a002-07cb-4dac-9b46-4628e0bba25d\" },\n  { \"value\": 200, \"latency\": 850, \"customerId\": \"c218a002-07cb-4dac-9b46-4628e0bba25d\" },\n  { \"value\": 120, \"latency\": 1000, \"customerId\": \"c218a002-07cb-4dac-9b46-4628e0bba25d\" },\n  { \"value\": 20, \"latency\": 50, \"customerId\": \"c218a002-07cb-4dac-9b46-4628e0bba25d\" },\n  { \"value\": 40, \"latency\": 100, \"customerId\": \"c218a002-07cb-4dac-9b46-4628e0bba25d\" }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{walletApiHost}}:{{walletApiPort}}/transaction",
+							"protocol": "http",
+							"host": [
+								"{{walletApiHost}}"
+							],
+							"port": "{{walletApiPort}}",
+							"path": [
+								"transaction"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Status",
+			"item": [
+				{
+					"name": "wallet-api",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{walletApiHost}}:{{walletApiPort}}/status",
+							"protocol": "http",
+							"host": [
+								"{{walletApiHost}}"
+							],
+							"port": "{{walletApiPort}}",
+							"path": [
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "wallet-processor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{walletProcessorHost}}:{{walletProcessorPort}}/status",
+							"protocol": "http",
+							"host": [
+								"{{walletProcessorHost}}"
+							],
+							"port": "{{walletProcessorPort}}",
+							"path": [
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "walletApiHost",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "walletApiPort",
+			"value": "3000",
+			"type": "string"
+		},
+		{
+			"key": "walletProcessorHost",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "walletProcessorPort",
+			"value": "3001",
+			"type": "string"
+		},
+		{
+			"key": "testToken",
+			"value": "123",
+			"type": "string"
+		},
+		{
+			"key": "testUserUid",
+			"value": "c218a002-07cb-4dac-9b46-4628e0bba25d",
+			"type": "string"
+		}
+	]
+}
