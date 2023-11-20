@@ -45,7 +45,7 @@ npm start
 - [x] Chunks are passed to the `wallet-processor`. Chunk with the highest `value` goes first.
 - [x] `POST /transaction`, `DELETE /customer/:id`, `PATCH /customer/:id` are protected by the Bearer token
 - [x] `GET /customer/:id` returns `name` (*full name*) and `balance`(*amount only*) to requests with Bearer token set, otherwise only `name` is returned
-- [x] Swagger API documentation
+- [x] Swagger API documentation at http://localhost:3000/api
 - [ ] No E2E and unit tests
 
 ### Wallet Processor
