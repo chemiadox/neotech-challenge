@@ -8,13 +8,10 @@
   "scripts": {
     "build:api": "nest build wallet-api",
     "build:processor": "nest build wallet-processor",
-    "build": "nest build wallet-api; nest build wallet-processor",
+    "build": "nest build wallet-api & nest build wallet-processor",
+    "start": "nest start wallet-api & nest start wallet-processor",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.454.0",

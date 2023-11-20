@@ -1,15 +1,24 @@
 import { NotFoundException } from '@nestjs/common';
 
 import { Customer } from '../mongodb/schemas/customer.schema';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CustomerPatchDto {
+  @ApiProperty({ required: false })
   first_name?: string;
+
+  @ApiProperty({ required: false })
   last_name?: string;
+
+  @ApiProperty({ required: false })
   balance?: number;
 }
 
 export class CustomerDto {
+  @ApiProperty()
   name: string;
+
+  @ApiProperty({ required: false })
   balance: number;
 
   constructor(customer: Customer = null) {

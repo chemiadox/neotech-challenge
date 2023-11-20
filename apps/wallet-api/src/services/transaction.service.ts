@@ -2,7 +2,7 @@ import { Queue } from 'bull';
 import { Injectable } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bull';
 
-import { Transaction } from '../types/transactions';
+import { ResponseJob, Transaction } from '../types/transactions';
 import { QueueJobs, Queues } from '../types/queues';
 
 @Injectable()
@@ -18,6 +18,6 @@ export class TransactionService {
      */
     const job = await this.transactionsQueue.add(QueueJobs.SPLIT, transactions);
 
-    return { jobId: job.id };
+    return { jobId: job.id } as ResponseJob;
   }
 }

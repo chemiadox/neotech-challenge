@@ -10,11 +10,17 @@ async function bootstrap() {
     .setTitle('Wallet API')
     .setDescription('Provides transactions and users endpoints')
     .setVersion('1.0')
-    .addTag('api')
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      in: 'header',
+    })
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
 }
+
 bootstrap();

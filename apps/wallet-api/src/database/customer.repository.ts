@@ -11,6 +11,10 @@ export class CustomerRepository {
     @InjectModel(Customer.name) private customerModel: Model<Customer>,
   ) {}
 
+  async customerExists(uid: string) {
+    return this.customerModel.exists({ uid });
+  }
+
   async getCustomer(uid: string) {
     return this.customerModel.findOne({ uid });
   }

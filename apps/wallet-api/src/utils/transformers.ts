@@ -1,5 +1,7 @@
 import { Schema } from 'mongoose';
 
+import { CustomerDocument } from '../database/mongodb/schemas/customer.schema';
+
 export type SeedDto = {
   uid: string;
   first_name: string;
@@ -61,5 +63,5 @@ export const transformCustomerSeedToDocument = (dto: SeedDto) => {
     },
     createdAt,
     updatedAt,
-  };
+  } as unknown as CustomerDocument;
 };
