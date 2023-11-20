@@ -25,7 +25,7 @@ export class TransactionProcessor {
 
     worker.on('message', async (data) => {
       this.chunksQueue.add(QueueJobs.PROCESS, data).then((job) => {
-        console.log('Processor jobId', job.id, job.data);
+        console.log(`Sending chunk #${job.id}`, job.data);
       });
     });
 

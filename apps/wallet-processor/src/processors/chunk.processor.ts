@@ -10,6 +10,8 @@ export class ChunkProcessor {
 
   @Process(QueueJobs.PROCESS)
   async handleProcess(job: Job) {
+    console.log(`Received chunk #${job.id}`, job.data);
+
     return this.transactionService.processTransactions(job.data);
   }
 }

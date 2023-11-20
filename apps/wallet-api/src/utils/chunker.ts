@@ -31,16 +31,16 @@ const findMax = <T extends Reducible>(
 ): List<T> | null => {
   let maxValue = 0;
   let maxRecord: T | null = null;
-  let maxList: List<T> = null;
+  let maxList: List<T> | null = null;
 
   for (let i = 0; i < records.length; i++) {
     if (records[i].latency <= capacity) {
       const stored = records[i].latency;
-      const capacityLeft = capacity - records[i].latency;
+      const capacityLeft = capacity - stored;
 
       records[i].latency = capacity;
       const newList = findMax(capacityLeft, records);
-      const newValue = calculate(newList) + stored;
+      const newValue = calculate(newList) + records[i].value;
       records[i].latency = stored;
 
       if (newValue > maxValue) {
@@ -59,11 +59,13 @@ export function* split<T extends Reducible>(
   capacity: number,
 ): Generator<T[]> {
   let reducible = [...records];
+
   let chunk = findMax(capacity, reducible);
 
   while (chunk) {
     const unwrapped = unwrap<T>(chunk);
     yield unwrapped;
+
     reducible = reducible.filter((record) => !unwrapped.includes(record));
     chunk = findMax(capacity, reducible);
   }
