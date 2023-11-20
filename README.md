@@ -8,6 +8,14 @@ large amounts of requests.
 - Docker with compose plugin are required to run local instance of Redis and MongoDB services
 - Npm to run application on local machine
 
+## Installation
+
+If application will be executed on the host machine, then we need all packages to be installed. In case when the application is executed containerized, there are no additional packages required besides Docker
+```bash
+# For running on the host machine only
+npm i
+```
+
 ## Running the application
 
 Running containerized version
@@ -52,16 +60,6 @@ npm start
  - [x] If not, it executes streaming an `S3` object containing customer records. One per line.
  - [x] If the seeding in progress, transaction chunking is stopped. E.g. service accepts requests with transactions, but their execution is postponed until the seeding finished
 
-## Installation
-
-If application will be executed on the host machine, then we need all packages to be installed. In case when the application is executed containerized, there are no additional packages required besides Docker
-```bash
-# For running on the host machine only
-npm i
-```
-
-## Recomendation
-
 ## Stay in touch
 
-- Author - chemiadox
+- Author - Siniachevskii Konstantin
