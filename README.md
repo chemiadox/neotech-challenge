@@ -53,6 +53,7 @@ npm start
 - [x] Processor tries to decrease user's balance, then stores the transaction
 - [x] If balance is not enough to process transaction, transaction is stored with the flag `failed = true` to be processed later
 - [x] Scheduler takes care of unsuccessful transactions every hour
+- [x] Soft-deleted customer transactions are postponed (for undelete purpose), non-existent customer transactions are dropped
 - [ ] No E2E and unit tests
 
 ### Seeding data
