@@ -1,20 +1,22 @@
-import { Model, Schema } from 'mongoose';
+import { Schema } from 'mongoose';
 import { BigNumber } from 'bignumber.js';
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 
-import { Customer } from '../database/mongodb/schemas/customer.schema';
 import { CustomerRepository } from '../database/customer.repository';
 
 @Injectable()
 export class CustomerService {
-  constructor(
-    @InjectModel(Customer.name) private customerModel: Model<Customer>,
-    private readonly customerRepository: CustomerRepository,
-  ) {}
+  constructor(private readonly customerRepository: CustomerRepository) {}
 
   async decreaseBalance(customerId: string, amount: number) {
     const customer = await this.customerRepository.getCustomer(customerId);
+
+    if (!customer) {
+      // For soft-deleted return false (to retry later)
+      // For non-existent return true (to drop transaction)
+      return !(await this.customerRepository.customerExists(customerId));
+    }
+
     const balance = new BigNumber(customer.credit_card.balance.path);
 
     if (balance.isLessThan(amount)) {

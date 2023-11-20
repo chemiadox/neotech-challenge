@@ -1,5 +1,5 @@
 import { Model, Schema } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { Customer, CustomerDocument } from './mongodb/schemas/customer.schema';
@@ -16,7 +16,7 @@ export class CustomerRepository {
   }
 
   async getCustomer(uid: string) {
-    return this.customerModel.findOne({ uid });
+    return this.customerModel.findOne({ uid, deleted: false });
   }
 
   async createCustomer(document: CustomerDocument) {
@@ -24,7 +24,11 @@ export class CustomerRepository {
   }
 
   async updateCustomer(uid: string, customerPatchDto: CustomerPatchDto) {
-    const customer = await this.customerModel.findOne({ uid });
+    const customer = await this.getCustomer(uid);
+
+    if (!customer) {
+      throw new NotFoundException('Customer not found');
+    }
 
     if (customerPatchDto.first_name) {
       customer.first_name = customerPatchDto.first_name;
