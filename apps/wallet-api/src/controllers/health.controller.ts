@@ -4,7 +4,7 @@ import { InjectConnection } from '@nestjs/mongoose';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { StatusDto } from '../database/dto/health.dto';
-import { config } from "../config";
+import { config } from '../config';
 
 @Controller()
 @ApiTags('Status')
