@@ -43,6 +43,7 @@ npm start
 - [x] Separate microservices for `wallet-api` and `wallet-processor`
 - [x] Transactions are split into chunks with attempt to maximize chunk total value while limiting chunk total latency.
 - [x] Chunks are passed to the `wallet-processor`. Chunk with the highest `value` goes first.
+- [x] Transactions are not verified for the case of non-existent users, these transactions are dropped by the wallet-processor
 - [x] `POST /transaction`, `DELETE /customer/:id`, `PATCH /customer/:id` are protected by the Bearer token
 - [x] `GET /customer/:id` returns `name` (*full name*) and `balance`(*amount only*) to requests with Bearer token set, otherwise only `name` is returned
 - [x] Swagger API documentation at http://localhost:3000/api
